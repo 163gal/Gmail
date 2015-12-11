@@ -1,4 +1,5 @@
 # Copyright (C) 2007, One Laptop Per Child
+# Copyright (C) 2009, Tomeu Vizoso
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,20 +17,24 @@
 
 from gettext import gettext as _
 
-import gtk
+from gi.repository import Gtk
+from gi.repository import GObject
 
-from sugar.graphics.toolbutton import ToolButton
+from sugar3.graphics.toolbutton import ToolButton
+from sugar3.graphics.toggletoolbutton import ToggleToolButton
 
-class ViewToolbar(gtk.Toolbar):
+from browser import Browser
+from browser import ZOOM_ORIGINAL
+
+
+class ViewToolbar(Gtk.Toolbar):
     def __init__(self, activity):
-        gtk.Toolbar.__init__(self)
+        GObject.GObject.__init__(self)
 
-        self._activity = activity        
-        self._activity.tray.connect('unmap', self.__unmap_cb)
-        self._activity.tray.connect('map', self.__map_cb)
+        self._browser = None
 
-        self._browser = self._activity._browser
-                
+        self._activity = activity
+
         self.zoomout = ToolButton('zoom-out')
         self.zoomout.set_tooltip(_('Zoom out'))
         self.zoomout.connect('clicked', self.__zoomout_clicked_cb)
@@ -42,7 +47,13 @@ class ViewToolbar(gtk.Toolbar):
         self.insert(self.zoomin, -1)
         self.zoomin.show()
 
-        self.separator = gtk.SeparatorToolItem()
+        self.zoom_original = ToolButton('zoom-original')
+        self.zoom_original.set_tooltip(_('Actual size'))
+        self.zoom_original.connect('clicked', self.__zoom_original_clicked_cb)
+        self.insert(self.zoom_original, -1)
+        self.zoom_original.show()
+
+        self.separator = Gtk.SeparatorToolItem()
         self.separator.set_draw(True)
         self.insert(self.separator, -1)
         self.separator.show()
@@ -53,40 +64,58 @@ class ViewToolbar(gtk.Toolbar):
         self.insert(self.fullscreen, -1)
         self.fullscreen.show()
 
-        self.traybutton = ToolButton('tray-hide')
-        self.traybutton.connect('clicked', self.__tray_clicked_cb)
+        self.traybutton = ToggleToolButton('tray-show')
+        self.traybutton.set_icon_name('tray-favourite')
+        self.traybutton.connect('toggled', self.__tray_toggled_cb)
         self.traybutton.props.sensitive = False
+        self.traybutton.props.active = False
         self.insert(self.traybutton, -1)
         self.traybutton.show()
-                
+
+        tabbed_view = self._activity.get_canvas()
+
+        if tabbed_view.get_n_pages():
+            self._connect_to_browser(tabbed_view.props.current_browser)
+
+        tabbed_view.connect_after('switch-page', self.__switch_page_cb)
+
+    def __switch_page_cb(self, tabbed_view, page, page_num):
+        self._connect_to_browser(tabbed_view.props.current_browser)
+
+    def _connect_to_browser(self, browser):
+        self._browser = browser
+        self._update_zoom_buttons()
+
+    def _update_zoom_buttons(self):
+        is_webkit_browser = isinstance(self._browser, Browser)
+        self.zoomin.set_sensitive(is_webkit_browser)
+        self.zoomout.set_sensitive(is_webkit_browser)
+        self.zoom_original.set_sensitive(is_webkit_browser)
+
+    def __zoom_original_clicked_cb(self, button):
+        tabbed_view = self._activity.get_canvas()
+        tabbed_view.props.current_browser.set_zoom_level(ZOOM_ORIGINAL)
+
     def __zoomin_clicked_cb(self, button):
-        self._browser.zoom_in()
-        
+        tabbed_view = self._activity.get_canvas()
+        tabbed_view.props.current_browser.zoom_in()
+
     def __zoomout_clicked_cb(self, button):
-        self._browser.zoom_out()
-                
+        tabbed_view = self._activity.get_canvas()
+        tabbed_view.props.current_browser.zoom_out()
+
     def __fullscreen_clicked_cb(self, button):
         self._activity.fullscreen()
 
-    def __tray_clicked_cb(self, button):        
-        if self._activity.tray.props.visible is False:
+    def __tray_toggled_cb(self, button):
+        if button.props.active:
             self._activity.tray.show()
         else:
             self._activity.tray.hide()
+        self.update_traybutton_tooltip()
 
-    def __map_cb(self, tray):
-        if len(self._activity.tray.get_children()) > 0:
-            self.tray_set_hide()
-            
-    def __unmap_cb(self, tray):
-        if len(self._activity.tray.get_children()) > 0:
-            self.tray_set_show()
-        
-    def tray_set_show(self):     
-        self.traybutton.set_icon('tray-show')
-        self.traybutton.set_tooltip(_('Show Tray'))
-        
-    def tray_set_hide(self):
-        self.traybutton.set_icon('tray-hide')
-        self.traybutton.set_tooltip(_('Hide Tray'))
-        
+    def update_traybutton_tooltip(self):
+        if not self.traybutton.props.active:
+            self.traybutton.set_tooltip(_('Show Tray'))
+        else:
+            self.traybutton.set_tooltip(_('Hide Tray'))

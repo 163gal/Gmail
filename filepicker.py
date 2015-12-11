@@ -19,141 +19,64 @@ import os
 import tempfile
 import shutil
 
-import gtk
+from gi.repository import Gtk
 
-import xpcom
-from xpcom import components
-from xpcom.components import interfaces
-from xpcom.server.factory import Factory
+from sugar3.graphics.objectchooser import ObjectChooser
+from sugar3.activity.activity import get_activity_root
 
-from sugar.graphics.objectchooser import ObjectChooser
 
-_temp_files_to_clean = []
-_browser_window = None
+_temp_dirs_to_clean = []
+
 
 def cleanup_temp_files():
-    for temp_file in _temp_files_to_clean:
-        if os.path.exists(temp_file):
-            os.remove(temp_file)
-            _temp_files_to_clean.remove(temp_file)
+    while _temp_dirs_to_clean:
+        temp_dir = _temp_dirs_to_clean.pop()
+        if os.path.isdir(temp_dir):
+            shutil.rmtree(temp_dir, ignore_errors=True)
         else:
-            logging.debug('filepicker.cleanup_temp_files: no file %r' 
-                          % temp_file)
+            logging.debug('filepicker.cleanup_temp_files: no file %r',
+                          temp_dir)
 
-class FilePicker:
-    _com_interfaces_ = interfaces.nsIFilePicker
 
-    cid = '{57901c41-06cb-4b9e-8258-37323327b583}'
-    description = 'Sugar File Picker'
+class FilePicker(ObjectChooser):
+    def __init__(self, parent):
+        ObjectChooser.__init__(self, parent)
 
-    def __init__(self):
-        self._title = None
-        self._parent = None
-        self._file = None
-    
-    def appendFilter(self, title, filter):
-        logging.warning('FilePicker.appendFilter: UNIMPLEMENTED')
-
-    def appendFilters(self, filterMask):
-        logging.warning('FilePicker.appendFilters: UNIMPLEMENTED')
-
-    def init(self, parent, title, mode):
-        self._title = title
-        self._file = None
-
-        """
-        Would be nice to get the window xid with something like this, but
-        couldn't find how.
-        
-        cls = components.classes['@mozilla.org/embedcomp/window-watcher;1']
-        window_watcher = cls.getService(interfaces.nsIWindowWatcher)
-        chrome = window_watcher.getChromeForWindow(parent)
-        self._parent = chrome.web_view.get_toplevel()
-        """
-        self._parent = _browser_window
-        
-        if mode != interfaces.nsIFilePicker.modeOpen:
-            raise xpcom.COMException(NS_ERROR_NOT_IMPLEMENTED)
-
-    def show(self):
-        chooser = ObjectChooser(parent=self._parent)
+    def run(self):
+        jobject = None
+        _file = None
         try:
-            result = chooser.run()
-            if result == gtk.RESPONSE_ACCEPT:
-                logging.debug('FilePicker.show: %r' % 
-                              chooser.get_selected_object())
-                jobject = chooser.get_selected_object()
+            result = ObjectChooser.run(self)
+            if result == Gtk.ResponseType.ACCEPT:
+                jobject = self.get_selected_object()
+                logging.debug('FilePicker.show: %r', jobject)
+
                 if jobject and jobject.file_path:
-                    ext = os.path.splitext(jobject.file_path)[1]
-                    f, new_temp = tempfile.mkstemp(ext)
-                    del f
+                    tmp_dir = tempfile.mkdtemp(
+                        prefix='',
+                        dir=os.path.join(get_activity_root(), 'tmp'))
+                    _file = os.path.join(tmp_dir, _basename_strip(jobject))
 
-                    global _temp_files_to_clean
-                    _temp_files_to_clean.append(new_temp)
-                    shutil.copy(jobject.file_path, new_temp)
+                    os.rename(jobject.file_path, _file)
 
-                    self._file = new_temp
+                    global _temp_dirs_to_clean
+                    _temp_dirs_to_clean.append(tmp_dir)
+
+                    logging.debug('FilePicker.show: file=%r', _file)
         finally:
-            chooser.destroy()
-            del chooser
+            if jobject is not None:
+                jobject.destroy()
 
-        if self._file:
-            return interfaces.nsIFilePicker.returnOK
-        else:
-            return interfaces.nsIFilePicker.returnCancel
+        return _file
 
-    def set_defaultExtension(self, default_extension):
-        logging.warning('FilePicker.set_defaultExtension: UNIMPLEMENTED')
 
-    def get_defaultExtension(self):
-        logging.warning('FilePicker.get_defaultExtension: UNIMPLEMENTED')
-        return None
+def _basename_strip(jobject):
+    name = jobject.metadata.get('title', 'untitled')
+    name = name.replace(os.sep, ' ').strip()
 
-    def set_defaultString(self, default_string):
-        logging.warning('FilePicker.set_defaultString: UNIMPLEMENTED')
+    root_, mime_extension = os.path.splitext(jobject.file_path)
 
-    def get_defaultString(self):
-        logging.warning('FilePicker.get_defaultString: UNIMPLEMENTED')
-        return None
+    if not name.endswith(mime_extension):
+        name += mime_extension
 
-    def set_displayDirectory(self, display_directory):
-        logging.warning('FilePicker.set_displayDirectory: UNIMPLEMENTED')
-
-    def get_displayDirectory(self):
-        logging.warning('FilePicker.get_displayDirectory: UNIMPLEMENTED')
-        return None
-
-    def set_filterIndex(self, filter_index):
-        logging.warning('FilePicker.set_filterIndex: UNIMPLEMENTED')
-
-    def get_filterIndex(self):
-        logging.warning('FilePicker.get_filterIndex: UNIMPLEMENTED')
-        return None
-
-    def get_file(self):
-        logging.debug('FilePicker.get_file: %r' % self._file)
-        if self._file:
-            cls = components.classes["@mozilla.org/file/local;1"]
-            local_file = cls.createInstance(interfaces.nsILocalFile)
-            local_file.initWithPath(self._file)
-            return local_file
-        else:
-            return None
-
-    def get_Files(self):
-        logging.warning('FilePicker.get_Files: UNIMPLEMENTED')
-        return None
-
-    def get_FileURL(self):
-        logging.warning('FilePicker.get_FileURL: UNIMPLEMENTED')
-        return None
-
-components.registrar.registerFactory(FilePicker.cid,
-                                     FilePicker.description,
-                                     '@mozilla.org/filepicker;1',
-                                     Factory(FilePicker))
-
-def init(main_window):
-    global _browser_window
-    _browser_window = main_window.get_toplevel()
-
+    return name

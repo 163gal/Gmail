@@ -1,7 +1,7 @@
 [Activity]
 name = Gmail
-activity_version = 5
-service_name = org.laptop.GmailActivity
+activity_version = 6
+bundle_id = org.laptop.GmailActivity
 icon = activity-gmail
 exec = sugar-activity webactivity.GmailActivity -s
-mime_types = 
+license = GPLv2+

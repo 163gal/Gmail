@@ -18,38 +18,37 @@
 
 import json
 import sha
-import gobject
+from gi.repository import GObject
 import base64
 
-class Model(gobject.GObject):
+
+class Model(GObject.GObject):
     ''' The model of web-activity which uses json to serialize its data
-    to a file and deserealize from it. 
+    to a file and deserealize from it.
     '''
     __gsignals__ = {
-        'add_link': (gobject.SIGNAL_RUN_FIRST,
-                     gobject.TYPE_NONE, ([int]))
+        'add_link': (GObject.SignalFlags.RUN_FIRST,
+                     None, ([int])),
         }
-    
+
     def __init__(self):
-        gobject.GObject.__init__(self)    
+        GObject.GObject.__init__(self)
         self.data = {}
         self.data['shared_links'] = []
         self.data['deleted'] = []
-        
+
     def add_link(self, url, title, thumb, owner, color, timestamp):
         index = len(self.data['shared_links'])
         for item in self.data['shared_links']:
-            if timestamp <= item['timestamp']: 
+            if timestamp <= item['timestamp']:
                 index = self.data['shared_links'].index(item)
                 break
-        
-        self.data['shared_links'].insert(index,
-                                         {'hash':sha.new(str(url)).hexdigest(),
-                                          'url':str(url), 'title':str(title),
-                                          'thumb':base64.b64encode(thumb),
-                                          'owner':str(owner), 
-                                          'color':str(color),
-                                          'timestamp':float(timestamp)})
+
+        info = {'hash': sha.new(str(url)).hexdigest(), 'url': str(url),
+                'title': str(title), 'thumb': base64.b64encode(thumb),
+                'owner': str(owner), 'color': str(color),
+                'timestamp': float(timestamp)}
+        self.data['shared_links'].insert(index, info)
         self.emit('add_link', index)
 
     def remove_link(self, hash):
@@ -57,23 +56,25 @@ class Model(gobject.GObject):
             if link['hash'] == hash:
                 self.data['deleted'].append(link['hash'])
                 self.data['shared_links'].remove(link)
-                break                
-        
+                break
+
+    def change_link_notes(self, hash, notes):
+        for link in self.data['shared_links']:
+            if link['hash'] == hash:
+                link['notes'] = notes
+
     def serialize(self):
-        return json.write(self.data)
+        return json.dumps(self.data)
 
     def deserialize(self, data):
-        self.data = json.read(data)
-        if not self.data.has_key('shared_links'):
-            self.data['shared_links'] = []
-        if not self.data.has_key('deleted'):
-            self.data['deleted'] = []
-        
+        self.data = json.loads(data)
+        self.data.setdefault('shared_links', [])
+        self.data.setdefault('deleted', [])
+
     def get_links_ids(self):
         ids = []
         for link in self.data['shared_links']:
             ids.append(link['hash'])
         ids.extend(self.data['deleted'])
-        ids.append('')    
+        ids.append('')
         return ids
-    

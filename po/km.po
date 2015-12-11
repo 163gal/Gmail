@@ -2,134 +2,257 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-29 00:30-0400\n"
-"PO-Revision-Date: 2008-03-18 17:45-0400\n"
-"Last-Translator: Rit Lim <rit.lim@gmail.com>\n"
+"POT-Creation-Date: 2013-06-28 00:32-0400\n"
+"PO-Revision-Date: 2011-04-28 14:32+0200\n"
+"Last-Translator: Chris <cjl@laptop.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: km\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 1.1.0rc2\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 2.0.1\n"
 
-#: activity/activity.info:2 webactivity.py:109
+#. TRANS: "name" option from activity.info file
 msgid "Browse"
 msgstr "រក​មើល"
 
-#: browser.py:144
-msgid "Source"
-msgstr "ប្រពភ"
+#. TRANS: "summary" option from activity.info file
+#. TRANS: "description" option from activity.info file
+msgid ""
+"Surf the world! Here you can do research, watch educational videos, take "
+"online courses, find books, connect with friends and more."
+msgstr ""
 
-#: downloadmanager.py:141
-msgid "Download started"
-msgstr "ចាប់​ផ្ដើម​ទាញហើយ"
+#: browser.py:472 browser.py:524 browser.py:525 webactivity.py:451
+msgid "Untitled"
+msgstr "គ្មាន​ចំណង​ជើង"
 
-#: downloadmanager.py:143 downloadmanager.py:157
+#: browser.py:521
+msgid "Loading..."
+msgstr ""
+
+#: browser.py:757 browser.py:758
+msgid "This web page could not be loaded"
+msgstr ""
+
+#: browser.py:759
 #, python-format
-msgid "%s"
-msgstr "%s"
+msgid ""
+"\"%s\" could not be loaded. Please check for typing errors, and make sure "
+"you are connected to the Internet."
+msgstr ""
 
-#: downloadmanager.py:155
-msgid "Download completed"
-msgstr "ទាញ​រួច​ហើយ"
+#: browser.py:762 pdfviewer.py:394
+msgid "Try again"
+msgstr ""
 
-#: downloadmanager.py:160
-msgid "Show in Journal"
-msgstr "បង្ហាញ​ក្នុង​កំណត់​ប្រចាំ​ថ្ងៃ"
+#: downloadmanager.py:124
+msgid "Not enough space to download"
+msgstr ""
 
-#: downloadmanager.py:163
+#: downloadmanager.py:133
+msgid ""
+"Download \"%{filename}\" requires %{total_size_in_mb} MB of free space, only "
+"%{free_space_in_mb} MB is available"
+msgstr ""
+
+#: downloadmanager.py:141 downloadmanager.py:176
 msgid "Ok"
 msgstr "យល់​ព្រម"
 
-#: downloadmanager.py:169
-#, python-format
-msgid "File %s from %s."
-msgstr "ឯកសារ %s មក​ពី %s."
+#: downloadmanager.py:157
+msgid "Download started"
+msgstr "ចាប់​ផ្ដើម​ទាញហើយ"
 
-#: downloadmanager.py:245
+#: downloadmanager.py:158 downloadmanager.py:170
+#, python-format
+msgid "%s"
+msgstr ""
+
+#: downloadmanager.py:168
+msgid "Download completed"
+msgstr "ទាញ​រួច​ហើយ"
+
+#: downloadmanager.py:173
+msgid "Show in Journal"
+msgstr "បង្ហាញ​ក្នុង​កំណត់​ប្រចាំ​ថ្ងៃ"
+
+#: downloadmanager.py:184 pdfviewer.py:589
+#, python-format
+msgid "From: %s"
+msgstr "ពី ៖ %s"
+
+#: downloadmanager.py:292
 #, python-format
 msgid ""
-"Downloading %s from \n"
-"%s."
+"Downloading %(filename)s from \n"
+"%(source)s."
 msgstr ""
-"កំពុង​ទាញ​មក​ពី \n"
-"%s"
 
-#: linkbutton.py:94
+#: edittoolbar.py:65
+msgid "Previous"
+msgstr "ទៅ​ក្រោយ"
+
+#: edittoolbar.py:72
+msgid "Next"
+msgstr "បន្ទាប់"
+
+#: linkbutton.py:108
 msgid "Remove"
 msgstr "យកចេញ"
 
-#: palettes.py:88
+#: palettes.py:184
 msgid "Follow link"
+msgstr "តាម​តំណ"
+
+#: palettes.py:189
+msgid "Follow link in new tab"
 msgstr ""
 
-#: palettes.py:93 palettes.py:141
-msgid "Copy"
+#: palettes.py:198
+msgid "Keep link"
+msgstr "ទុក​តំណ"
+
+#: palettes.py:204
+msgid "Copy link"
+msgstr "ចម្លង​តំណ"
+
+#: palettes.py:218
+msgid "Copy image"
+msgstr "ចម្លង​រូបភាព"
+
+#: palettes.py:224
+msgid "Keep image"
 msgstr ""
 
-#: viewtoolbar.py:34
+#: palettes.py:238
+msgid "Copy text"
+msgstr ""
+
+#: pdfviewer.py:91 viewtoolbar.py:39
 msgid "Zoom out"
-msgstr "ពង្រីក"
-
-#: viewtoolbar.py:40
-msgid "Zoom in"
 msgstr "បង្រួម"
 
-#: viewtoolbar.py:51
+#: pdfviewer.py:97 viewtoolbar.py:45
+msgid "Zoom in"
+msgstr "ពង្រីក"
+
+#: pdfviewer.py:103 viewtoolbar.py:51
+msgid "Actual size"
+msgstr ""
+
+#: pdfviewer.py:114
+msgid "Previous page"
+msgstr ""
+
+#: pdfviewer.py:121
+msgid "Next page"
+msgstr ""
+
+#: pdfviewer.py:133
+msgid "Save PDF to Journal"
+msgstr ""
+
+#: pdfviewer.py:341
+msgid "Cancel"
+msgstr ""
+
+#: pdfviewer.py:490
+msgid "Downloading document..."
+msgstr ""
+
+#: pdfviewer.py:546
+msgid "This document could not be loaded"
+msgstr ""
+
+#: pdfviewer.py:554
+msgid "Please make sure you are connected to the Internet."
+msgstr ""
+
+#: viewtoolbar.py:62
 msgid "Fullscreen"
 msgstr "ពេញ​អេក្រង់"
 
-#: viewtoolbar.py:87
+#: viewtoolbar.py:113
 msgid "Show Tray"
 msgstr "បង្ហាញ​ថាស"
 
-#: viewtoolbar.py:91
+#: viewtoolbar.py:116
 msgid "Hide Tray"
 msgstr "លាក់ថាស"
 
-#: webactivity.py:105
-msgid "Edit"
+#: webactivity.py:490
+msgid "The initial page was configured"
 msgstr ""
 
-#: webactivity.py:117
-msgid "View"
-msgstr "មើល"
+#: webactivity.py:494
+msgid "The default initial page was configured"
+msgstr ""
 
-#: webactivity.py:136 webactivity.py:137
-msgid "blank"
-msgstr "ទទេ"
-
-#: webactivity.py:449
+#: webactivity.py:655
+#, fuzzy
 msgid "Download in progress"
-msgstr "កំពុង​ទាញ"
+msgid_plural "Downloads in progress"
+msgstr[0] "កំពុង​ទាញ"
 
-#: webactivity.py:450
-msgid "Stopping now will cancel your download"
-msgstr "ការ​ទាញនេះនឹង​បាត់​បើបញ្ឈប់នៅ​ពេល​នេះ"
+#: webactivity.py:658
+#, fuzzy
+msgid "Stopping now will erase your download"
+msgid_plural "Stopping now will erase your downloads"
+msgstr[0] "ការ​ទាញនេះនឹង​បាត់​បើបញ្ឈប់នៅ​ពេល​នេះ"
 
-#: webactivity.py:452
-msgid "Cancel"
-msgstr "បោះបង់"
+#: webactivity.py:663
+msgid "Continue download"
+msgid_plural "Continue downloads"
+msgstr[0] ""
 
-#: webactivity.py:454 webtoolbar.py:174
+#: webactivity.py:668
 msgid "Stop"
 msgstr "បញ្ឈប់"
 
-#: webtoolbar.py:52
+#: webtoolbar.py:288
+msgid "Home page"
+msgstr "គេហ​ទំព័រ"
+
+#: webtoolbar.py:294
+msgid "Select as initial page"
+msgstr ""
+
+#: webtoolbar.py:299
+msgid "Reset initial page"
+msgstr ""
+
+#: webtoolbar.py:305
+msgid "Library"
+msgstr ""
+
+#: webtoolbar.py:338
 msgid "Back"
 msgstr "ថយ​ទៅ​​ក្រោយ"
 
-#: webtoolbar.py:59
+#: webtoolbar.py:352
 msgid "Forward"
 msgstr "ថយ​ទៅ​មុខ"
 
-#: webtoolbar.py:82
+#: webtoolbar.py:366
 msgid "Bookmark"
 msgstr "គូចំណាំ"
 
-#: webtoolbar.py:177
-msgid "Reload"
-msgstr "ទាញ​សាឡើង​វិញ"
+#~ msgid "Edit"
+#~ msgstr "កែសម្រួល"
+
+#~ msgid "View"
+#~ msgstr "មើល"

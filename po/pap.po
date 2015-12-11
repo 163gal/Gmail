@@ -1,145 +1,290 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Wenchi <linguares@yahoo.com>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-14 00:30-0400\n"
-"PO-Revision-Date: 2008-06-19 08:15-0400\n"
-"Last-Translator: Urso Wieske <uwieske@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2013-06-28 00:32-0400\n"
+"PO-Revision-Date: 2013-11-02 15:45+0200\n"
+"Last-Translator: June <juneleonora@yahoo.com>\n"
+"Language-Team: Suares\n"
+"Language: pap\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 1.1.0rc2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.0.5\n"
 
-#: activity/activity.info:2 webactivity.py:113
+#. TRANS: "name" option from activity.info file
 msgid "Browse"
-msgstr "Nabega"
+msgstr "Nabegá"
 
-#: browser.py:149
-msgid "Source"
-msgstr "Fuente"
+#. TRANS: "summary" option from activity.info file
+#. TRANS: "description" option from activity.info file
+msgid ""
+"Surf the world! Here you can do research, watch educational videos, take "
+"online courses, find books, connect with friends and more."
+msgstr ""
+"Nabegá rònt mundu! Aki bo por hasi investigashon, wak vidio edukashonal, "
+"sigui kursonan online, haña buki, konektá ku amigunan i mas."
 
-#: downloadmanager.py:141
+#: browser.py:472 browser.py:524 browser.py:525 webactivity.py:451
+msgid "Untitled"
+msgstr "Sin título"
+
+#: browser.py:521
+msgid "Loading..."
+msgstr "Kargando..."
+
+#: browser.py:757 browser.py:758
+msgid "This web page could not be loaded"
+msgstr "No por a karga e web page akí"
+
+#: browser.py:759
+#, python-format
+msgid ""
+"\"%s\" could not be loaded. Please check for typing errors, and make sure "
+"you are connected to the Internet."
+msgstr ""
+"no por a karga \"%s\". Fabor chèk pa eror di taip i sòru pa bo ta konektá ku "
+"Internet."
+
+#: browser.py:762 pdfviewer.py:394
+msgid "Try again"
+msgstr "Bolbe purba"
+
+#: downloadmanager.py:124
+msgid "Not enough space to download"
+msgstr "No tin sufisiente espasio pa download"
+
+#: downloadmanager.py:133
+msgid ""
+"Download \"%{filename}\" requires %{total_size_in_mb} MB of free space, only "
+"%{free_space_in_mb} MB is available"
+msgstr ""
+"Download \"%{filename}\" ta rekerí %{total_size_in_mb} MB of di espasio liber, "
+"solamente %{free_space_in_mb} MB ta disponibel"
+
+#: downloadmanager.py:141 downloadmanager.py:176
+msgid "Ok"
+msgstr "Ok"
+
+#: downloadmanager.py:157
 msgid "Download started"
-msgstr "Download a kuminsa"
+msgstr "Download a kuminsá"
 
-#: downloadmanager.py:143 downloadmanager.py:157
+#: downloadmanager.py:158 downloadmanager.py:170
 #, python-format
 msgid "%s"
 msgstr "%s"
 
-#: downloadmanager.py:155
+#: downloadmanager.py:168
 msgid "Download completed"
 msgstr "Download kompletá"
 
-#: downloadmanager.py:160
+#: downloadmanager.py:173
 msgid "Show in Journal"
-msgstr "Mustra den e Diario"
+msgstr "Mustra den Diario"
 
-#: downloadmanager.py:163
-msgid "Ok"
-msgstr "Ok"
-
-#: downloadmanager.py:169
+#: downloadmanager.py:184 pdfviewer.py:589
 #, python-format
-msgid "File %s from %s."
-msgstr "File %s di %s."
+msgid "From: %s"
+msgstr "Di: %s"
 
-#: downloadmanager.py:245
+#: downloadmanager.py:292
 #, python-format
 msgid ""
-"Downloading %s from \n"
-"%s."
+"Downloading %(filename)s from \n"
+"%(source)s."
 msgstr ""
-"Downloading %s di \n"
-"%s."
+"Ta download %(filename)s for di \n"
+"%(source)s."
 
-#: edittoolbar.py:94
+#: edittoolbar.py:65
 msgid "Previous"
 msgstr "Anterior"
 
-#: edittoolbar.py:101
+#: edittoolbar.py:72
 msgid "Next"
-msgstr "Sigiente"
+msgstr "Siguiente"
 
-#: linkbutton.py:94
+#: linkbutton.py:108
 msgid "Remove"
-msgstr "Elimina"
+msgstr "Eliminá"
 
-#: palettes.py:89
+#: palettes.py:184
 msgid "Follow link"
-msgstr "Sigi e link"
+msgstr "Sigui e link"
 
-#: palettes.py:94 palettes.py:142
-msgid "Copy"
-msgstr "Kopia"
+#: palettes.py:189
+msgid "Follow link in new tab"
+msgstr "Sigui link den tab nobo"
 
-#: viewtoolbar.py:34
+#: palettes.py:198
+msgid "Keep link"
+msgstr "Mantené link"
+
+#: palettes.py:204
+msgid "Copy link"
+msgstr "Kopia link"
+
+#: palettes.py:218
+msgid "Copy image"
+msgstr "Kopia plachi"
+
+#: palettes.py:224
+msgid "Keep image"
+msgstr "Mantené plachi"
+
+#: palettes.py:238
+msgid "Copy text"
+msgstr "Kopia teksto"
+
+#: pdfviewer.py:91 viewtoolbar.py:39
 msgid "Zoom out"
-msgstr "Zoom out"
+msgstr "Hala afó"
 
-#: viewtoolbar.py:40
+#: pdfviewer.py:97 viewtoolbar.py:45
 msgid "Zoom in"
-msgstr "Zoom in"
+msgstr "Hala aden"
 
-#: viewtoolbar.py:51
-msgid "Fullscreen"
-msgstr "Pantaya kompleto"
+#: pdfviewer.py:103 viewtoolbar.py:51
+msgid "Actual size"
+msgstr "Tamaño real"
 
-#: viewtoolbar.py:87
-#, fuzzy
-msgid "Show Tray"
-msgstr "Mustra bandeha"
+#: pdfviewer.py:114
+msgid "Previous page"
+msgstr "Página anterior"
 
-#: viewtoolbar.py:91
-#, fuzzy
-msgid "Hide Tray"
-msgstr "Skonde bandeha"
+#: pdfviewer.py:121
+msgid "Next page"
+msgstr "Siguiente página"
 
-#: webactivity.py:109
-msgid "Edit"
-msgstr "Edita"
+#: pdfviewer.py:133
+msgid "Save PDF to Journal"
+msgstr "Warda PDF den Diario"
 
-#: webactivity.py:121
-msgid "View"
-msgstr "Mira"
-
-#: webactivity.py:140 webactivity.py:141
-msgid "blank"
-msgstr "bashí"
-
-#: webactivity.py:463
-msgid "Download in progress"
-msgstr "Download den progreso"
-
-#: webactivity.py:464
-msgid "Stopping now will cancel your download"
-msgstr "Stop aworaki lo kansela bo download"
-
-#: webactivity.py:466
+#: pdfviewer.py:341
 msgid "Cancel"
-msgstr "Kansela"
+msgstr "Kanselá"
 
-#: webactivity.py:468 webtoolbar.py:334
+#: pdfviewer.py:490
+msgid "Downloading document..."
+msgstr "Ta download dokumento..."
+
+#: pdfviewer.py:546
+msgid "This document could not be loaded"
+msgstr "No por a karga e dokumento page akí"
+
+#: pdfviewer.py:554
+msgid "Please make sure you are connected to the Internet."
+msgstr "Fabor sòru pa bo ta konektá ku Internet"
+
+#: viewtoolbar.py:62
+msgid "Fullscreen"
+msgstr "Pantaya kompletu"
+
+#: viewtoolbar.py:113
+msgid "Show Tray"
+msgstr "Mustra Teblachi"
+
+#: viewtoolbar.py:116
+msgid "Hide Tray"
+msgstr "Skonde Teblach"
+
+#: webactivity.py:490
+msgid "The initial page was configured"
+msgstr "A konfigurá e página inisial"
+
+#: webactivity.py:494
+msgid "The default initial page was configured"
+msgstr "A konfigurá e página inisial predefiní"
+
+#: webactivity.py:655
+msgid "Download in progress"
+msgid_plural "Downloads in progress"
+msgstr[0] "Bahamentu tumando lugá"
+msgstr[1] "Bahamentu tumando lugá"
+
+#: webactivity.py:658
+msgid "Stopping now will erase your download"
+msgid_plural "Stopping now will erase your downloads"
+msgstr[0] "Si stòp aworakí e bahamentu ta kanselá"
+msgstr[1] "Si stòp aworakí e bahamentu ta kanselá"
+
+#: webactivity.py:663
+msgid "Continue download"
+msgid_plural "Continue downloads"
+msgstr[0] "Sigui ku bahamentu"
+msgstr[1] "Sigui ku bahamentu"
+
+#: webactivity.py:668
 msgid "Stop"
-msgstr "Stop"
+msgstr "Stòp"
 
-#: webtoolbar.py:212
+#: webtoolbar.py:288
+msgid "Home page"
+msgstr "Página inisial"
+
+#: webtoolbar.py:294
+msgid "Select as initial page"
+msgstr "Skohe komo página inisial"
+
+#: webtoolbar.py:299
+msgid "Reset initial page"
+msgstr "Reinisiá página inisial"
+
+#: webtoolbar.py:305
+msgid "Library"
+msgstr "Biblioteka"
+
+#: webtoolbar.py:338
 msgid "Back"
 msgstr "Bèk"
 
-#: webtoolbar.py:219
+#: webtoolbar.py:352
 msgid "Forward"
-msgstr "Avansa"
+msgstr "Padilanti"
 
-#: webtoolbar.py:242
+#: webtoolbar.py:366
 msgid "Bookmark"
-msgstr "Markador"
+msgstr "Markabuki"
 
-#: webtoolbar.py:337
-msgid "Reload"
-msgstr "Rekarga"
+#, python-format
+#, fuzzy
+#~ msgid ""
+#~ "Downloading %s from \n"
+#~ "%s."
+#~ msgstr ""
+#~ "Downloading %s di \n"
+#~ "%s."
+
+#~ msgid "Edit"
+#~ msgstr "Edita"
+
+#~ msgid "View"
+#~ msgstr "Mira"
+
+#~ msgid "Reload"
+#~ msgstr "Rekargá"
+
+#, python-format
+#~ msgid "File %s from %s."
+#~ msgstr "File %s di %s."
+
+#~ msgid "Copy"
+#~ msgstr "Kopia"
+
+#~ msgid "blank"
+#~ msgstr "bashí"
+
+#~ msgid "Source"
+#~ msgstr "Fuente"

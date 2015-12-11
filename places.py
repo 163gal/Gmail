@@ -18,23 +18,25 @@ import os
 import sqlite3
 from datetime import datetime, timedelta
 
-from sugar.activity import activity
+from sugar3.activity import activity
 
 _store = None
 
+
 class Place(object):
-    def __init__(self, uri=None):
+    def __init__(self, uri=''):
         self.uri = uri
-        self.title = None
+        self.title = ''
         self.bookmark = False
         self.gecko_flags = 0
         self.visits = 0
         self.last_visit = datetime.now()
 
+
 class SqliteStore(object):
-    MAX_SEARCH_MATCHES = 20
+    MAX_SEARCH_MATCHES = 7
     EXPIRE_DAYS = 30
-    
+
     def __init__(self):
         db_path = os.path.join(activity.get_activity_root(),
                                'data', 'places.db')
@@ -43,7 +45,10 @@ class SqliteStore(object):
         cursor = self._connection.cursor()
 
         cursor.execute('select * from sqlite_master where name == "places"')
-        if cursor.fetchone() == None:
+        if cursor.fetchone() is None:
+            # Create table to store the visited places.  Note that
+            # bookmark and gecko_flags fields aren't used anymore in
+            # WebKit port, but are kept for backwards compatibility.
             cursor.execute("""create table places (
                                 uri         text,
                                 title       text,
@@ -61,9 +66,9 @@ class SqliteStore(object):
 
         try:
             text = '%' + text + '%'
-            cursor.execute('select uri, title, bookmark, gecko_flags, ' \
-                           'visits, last_visit from places ' \
-                           'where uri like ? or title like ? ' \
+            cursor.execute('select uri, title, bookmark, gecko_flags, '
+                           'visits, last_visit from places '
+                           'where uri like ? or title like ? '
                            'order by visits desc limit 0, ?',
                            (text, text, self.MAX_SEARCH_MATCHES))
 
@@ -77,9 +82,9 @@ class SqliteStore(object):
         cursor = self._connection.cursor()
 
         try:
-            cursor.execute('insert into places (uri, title, bookmark, ' \
-                           'gecko_flags, visits, last_visit) ' \
-                           'values (?, ?, ?, ?, ?, ?)', \
+            cursor.execute('insert into places (uri, title, bookmark, '
+                           'gecko_flags, visits, last_visit) '
+                           'values (?, ?, ?, ?, ?, ?)',
                            (place.uri, place.title, place.bookmark,
                             place.gecko_flags, place.visits, place.last_visit))
             self._connection.commit()
@@ -90,7 +95,7 @@ class SqliteStore(object):
         cursor = self._connection.cursor()
 
         try:
-            cursor.execute('select uri, title, bookmark, gecko_flags,visits, ' \
+            cursor.execute('select uri, title, bookmark, gecko_flags,visits, '
                            'last_visit from places where uri=?', (uri,))
 
             row = cursor.fetchone()
@@ -116,6 +121,14 @@ class SqliteStore(object):
     def _place_from_row(self, row):
         place = Place()
 
+        # Return uri and title as empty strings instead of None.
+        # Previous versions of Browse were allowing to store None for
+        # those fields in the places database.  See ticket #3400 .
+        if row[0] is None:
+            row = tuple([''] + list(row[1:]))
+        if row[1] is None:
+            row = tuple([row[0], ''] + list(row[2:]))
+
         place.uri, place.title, place.bookmark, place.gecko_flags, \
             place.visits, place.last_visit = row
 
@@ -131,8 +144,9 @@ class SqliteStore(object):
         finally:
             cursor.close()
 
+
 def get_store():
     global _store
-    if _store == None:
+    if _store is None:
         _store = SqliteStore()
     return _store
