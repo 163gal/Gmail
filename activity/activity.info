@@ -1,0 +1,7 @@
+[Activity]
+name = Gmail
+activity_version = 5
+service_name = org.laptop.GmailActivity
+icon = activity-gmail
+exec = sugar-activity webactivity.GmailActivity -s
+mime_types = 
