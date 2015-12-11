@@ -22,7 +22,6 @@ from gettext import gettext as _
 from gi.repository import GObject
 from gi.repository import Gtk
 from gi.repository import Gdk
-from gi.repository import GConf
 from gi.repository import Pango
 from gi.repository import WebKit
 
@@ -43,7 +42,7 @@ import tempfile
 import filepicker
 import places
 from browser import Browser
-from browser import HOME_PAGE_GCONF_KEY, LIBRARY_PATH
+from browser import LIBRARY_PATH
 
 from pdfviewer import DummyBrowser
 
@@ -334,9 +333,7 @@ class PrimaryToolbar(ToolbarBase):
         menu_box.show_all()
 
         # verify if the home page is configured
-        client = GConf.Client.get_default()
-        self._reset_home_menu.set_visible(
-            client.get_string(HOME_PAGE_GCONF_KEY) is not None)
+        self._reset_home_menu.set_visible(False)
 
         toolbar.insert(self._go_home, -1)
         self._go_home.show()
@@ -702,12 +699,9 @@ class PrimaryToolbar(ToolbarBase):
         webview.get_main_frame().print_full(
             operation, Gtk.PrintOperationAction.EXPORT)
 
-        client = GConf.Client.get_default()
         jobject = datastore.create()
-        color = client.get_string('/desktop/sugar/user/color')
         try:
             jobject.metadata['title'] = _('Browse activity as PDF')
-            jobject.metadata['icon-color'] = color
             jobject.metadata['mime_type'] = 'application/pdf'
             jobject.file_path = file_path
             datastore.write(jobject)

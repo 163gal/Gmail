@@ -28,7 +28,6 @@ from gi.repository import Gdk
 from gi.repository import Pango
 from gi.repository import WebKit
 from gi.repository import Soup
-from gi.repository import GConf
 
 from sugar3.activity import activity
 from sugar3.graphics import style
@@ -63,7 +62,6 @@ _NON_SEARCH_REGEX = re.compile('''
 DEFAULT_ERROR_PAGE = os.path.join(activity.get_bundle_path(),
                                   'data/error_page.tmpl')
 
-HOME_PAGE_GCONF_KEY = '/desktop/sugar/browser/home_page'
 _HOME_PAGE = 'http://gmail.com/'
 
 _sugar_version = None
@@ -348,8 +346,7 @@ class TabbedView(BrowserNotebook):
         browser.grab_focus()
 
     def reset_homepage(self):
-        client = GConf.Client.get_default()
-        client.unset(HOME_PAGE_GCONF_KEY)
+        pass
 
     def _get_current_browser(self):
         if self.get_n_pages():

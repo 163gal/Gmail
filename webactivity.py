@@ -34,7 +34,6 @@ import base64
 import time
 import shutil
 import json
-from gi.repository import GConf
 import cairo
 import StringIO
 from hashlib import sha1
@@ -82,48 +81,6 @@ if _profile_version < PROFILE_VERSION:
     f.write(str(PROFILE_VERSION))
     f.close()
 
-
-def _seed_xs_cookie(cookie_jar):
-    """Create a HTTP Cookie to authenticate with the Schoolserver.
-
-    Do nothing if the laptop is not registered with Schoolserver, or
-    if the cookie already exists.
-
-    """
-    client = GConf.Client.get_default()
-    backup_url = client.get_string('/desktop/sugar/backup_url')
-    if backup_url == '':
-        _logger.debug('seed_xs_cookie: Not registered with Schoolserver')
-        return
-
-    jabber_server = client.get_string(
-        '/desktop/sugar/collaboration/jabber_server')
-
-    soup_uri = Soup.URI()
-    soup_uri.set_scheme('xmpp')
-    soup_uri.set_host(jabber_server)
-    soup_uri.set_path('/')
-    xs_cookie = cookie_jar.get_cookies(soup_uri, for_http=False)
-    if xs_cookie is not None:
-        _logger.debug('seed_xs_cookie: Cookie exists already')
-        return
-
-    pubkey = profile.get_profile().pubkey
-    cookie_data = {'color': profile.get_color().to_string(),
-                   'pkey_hash': sha1(pubkey).hexdigest()}
-
-    expire = int(time.time()) + 10 * 365 * 24 * 60 * 60
-
-    xs_cookie = Soup.Cookie()
-    xs_cookie.set_name('xoid')
-    xs_cookie.set_value(json.dumps(cookie_data))
-    xs_cookie.set_domain(jabber_server)
-    xs_cookie.set_path('/')
-    xs_cookie.set_max_age(expire)
-    cookie_jar.add_cookie(xs_cookie)
-    _logger.debug('seed_xs_cookie: Updated cookie successfully')
-
-
 from browser import TabbedView
 from browser import ZOOM_ORIGINAL
 from webtoolbar import PrimaryToolbar
@@ -162,8 +119,6 @@ class GmailActivity(activity.Activity):
         cookie_jar = SoupGNOME.CookieJarSqlite(filename=_cookies_db_path,
                                                read_only=False)
         session.add_feature(cookie_jar)
-
-        _seed_xs_cookie(cookie_jar)
 
         # FIXME
         # downloadmanager.remove_old_parts()
